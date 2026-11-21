@@ -33,5 +33,11 @@ const LINES = [
 
 const POEM = LINES.join('\n') + '\n';
 
+// The gate allows 1 to 280 Unicode code points; refuse to write an
+// over-long poem rather than submit an entry the scorer would mark invalid.
+if (POEM.length < 1 || POEM.length > 280) {
+  throw new Error(`poem must be 1-280 characters, got ${POEM.length}`);
+}
+
 mkdirSync(OUT_DIR, { recursive: true });
 writeFileSync(join(OUT_DIR, 'entry.txt'), POEM, 'utf8');
